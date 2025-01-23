@@ -8,27 +8,20 @@ namespace ДзC_.classes
 {
     internal class Building
     {
-        Guid numBuilding;
+        static Guid numBuilding;
         double heightBuilding;
         byte floorsAmount;
         byte apartsAmount;
         byte entranceAmount;
 
-        internal Building() { }
-        
-        internal Building(Guid numBuilding)
+        public Guid numbuilding
         {
-            this.numBuilding = numBuilding;
+            get { return numBuilding; }
         }
-        internal Building(Guid numBuilding, double heightBuilding)
+        public double heightbuilding
         {
-            this.numBuilding = numBuilding;
-            this.heightBuilding = heightBuilding;
-        }
-        
-        public Guid GetNumber()
-        {
-            return numBuilding;
+            get { return heightBuilding; }
+            set { heightBuilding = value; }
         }
         public byte floorsamount
         {
@@ -48,7 +41,7 @@ namespace ДзC_.classes
 
         public void GenUniqiueNum()
         {
-            numBuilding = Guid.NewGuid();
+            Guid guid = Guid.NewGuid();
         }
         public double FloorHeight()
         {

@@ -6,48 +6,73 @@ namespace homework
     {
         static void Main()
         {
-            //Упражнение 11.1
-            Console.WriteLine("Упражнение 11.1 - 11.2");
+            //Упражнение 13.1
+            Console.WriteLine("Упражнение 13.1 - 13.2");
             Task1();
 
-            //Домашнее задание 11.1
-            Console.WriteLine("Домашнее задание 11.1");
+            //Домашнее задание 13.1
+            Console.WriteLine("Домашнее задание 13.1 - 13.2");
             Task2();
         }
 
-        /*Упражнение 11.1 Создать новый класс, который будет являться фабрикой объектов класса
-        банковский счет. Изменить модификатор доступа у конструкторов класса банковский счет на
-        internal. Добавить в фабричный класс перегруженные методы создания счета CreateAccount,
-        которые бы вызывали конструктор класса банковский счет и возвращали номер созданного
-        счета. Использовать хеш-таблицу для хранения всех объектов банковских счетов в
-        фабричном классе. В фабричном классе предусмотреть метод закрытия счета, который
-        удаляет счет из хеш-таблицы (методу в качестве параметра передается номер банковского
-        счета). Использовать утилиту ILDASM для просмотра структуры классов.*/
+        /*Упражнение 13.1 Из класса банковский счет удалить методы, возвращающие значения
+        полей номер счета и тип счета, заменить эти методы на свойства только для чтения.
+        Добавить свойство для чтения и записи типа string для отображения поля держатель
+        банковского счета. Изменить класс BankTransaction, созданный для хранений финансовых
+        операций со счетом, - заменить методы доступа к данным на свойства для чтения.*/
+
+        /*Упражнение 13.2 Добавить индексатор в класс банковский счет для получения доступа к
+        любому объекту BankTransaction.*/
         static void Task1()
         {
-            BankAccFactory factory = new BankAccFactory();
+            Console.WriteLine();
+            BankAccount bankAcc1 = new BankAccount("Алексей", 213124, AccountType.Сберегательный);
 
-            Guid account1 = factory.CreateAccount();
-            Guid account2 = factory.CreateAccount("Сергей");
+            Console.WriteLine("До изменений:");
+            bankAcc1.PrintAccBank();
 
-            Console.WriteLine($"Счет {account1}: {factory.GetAcc(account1).AccHolder}");
-            Console.WriteLine($"Счет {account2}: {factory.GetAcc(account2).AccHolder}");
-            
-            factory.AccClouser(account2);
-            Console.WriteLine("Второй счет закрыт");
+            bankAcc1.accountHolder = "Сергей";
+            Console.WriteLine("\nПосле изменений:");
+            bankAcc1.PrintAccBank();
+
+            Console.WriteLine($"Номер счета: {bankAcc1.accountNumber}, Тип счета: {bankAcc1.accountType}");
         }
 
-        /*Домашнее задание 11.1 Для реализованного класса из домашнего задания 7.1 создать
-        новый класс Creator, который будет являться фабрикой объектов класса здания. Для этого
-        изменить модификатор доступа к конструкторам класса, в новый созданный класс добавить
-        перегруженные фабричные методы CreateBuild для создания объектов класса здания. В
-        классе Creator все методы сделать статическими, конструктор класса сделать закрытым. Для
-        хранения объектов класса здания в классе Creator использовать хеш-таблицу. Предусмотреть
-        возможность удаления объекта здания по его уникальному номеру из хеш-таблицы. Создать
-        тестовый пример, работающий с созданными классами.*/
+        /*Домашнее задание 13.1 В классе здания из домашнего задания 7.1 все методы для
+        заполнения и получения значений полей заменить на свойства. Написать тестовый пример.*/
+
+        /*Домашнее задание 13.2 Создать класс для нескольких зданий. Поле класса – массив на 10
+        зданий. В классе создать индексатор, возвращающий здание по его номеру.*/
         static void Task2()
         {
-            
+            try
+            {
+                Building building = new Building();
+                building.GenUniqiueNum();
+
+                Console.WriteLine("Введите высоту здания");
+                building.heightbuilding = double.Parse(Console.ReadLine());
+
+                Console.WriteLine("Введите количество этажей в здании");
+                building.floorsamount = byte.Parse(Console.ReadLine());
+
+                Console.WriteLine("Введите количество квартир в здании");
+                building.apartsamount = byte.Parse(Console.ReadLine());
+
+                Console.WriteLine("Введите количество подъездов в здании");
+                building.entranceamount = byte.Parse(Console.ReadLine());
+                building.Print();
+
+                Buildings buildings = new Buildings();
+                buildings.SetBuildings();
+
+                Console.WriteLine("Введите номер здания от 0 до 9 включительно");
+                buildings[byte.Parse(Console.ReadLine())].Print();
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
